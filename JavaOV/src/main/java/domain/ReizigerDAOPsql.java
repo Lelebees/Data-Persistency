@@ -8,10 +8,12 @@ import java.util.List;
 
 public class ReizigerDAOPsql implements ReizigerDAO {
     Connection conn;
+    AdresDAOPsql adao;
 
     public ReizigerDAOPsql(Connection conn)
     {
         this.conn = conn;
+//        adao = new AdresDAOPsql(conn);
     }
 
     @Override
@@ -74,7 +76,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             rs.next();
-            return new Reiziger(rs.getInt("reiziger_id"), rs.getString("voorletters"), rs.getString("tussenvoegsel"), rs.getString("achternaam"), rs.getDate("geboortedatum"));
+            return constructReiziger(rs);
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -116,8 +118,19 @@ public class ReizigerDAOPsql implements ReizigerDAO {
         ArrayList<Reiziger> returnList = new ArrayList<>();
         while (rs.next())
         {
-            returnList.add(new Reiziger(rs.getInt("reiziger_id"), rs.getString("voorletters"), rs.getString("tussenvoegsel"), rs.getString("achternaam"), rs.getDate("geboortedatum")));
+           returnList.add(constructReiziger(rs));
         }
         return returnList;
+    }
+
+    private Reiziger constructReiziger (ResultSet rs) throws SQLException {
+//        this.adao = new AdresDAOPsql(conn);
+        Reiziger reiziger = new Reiziger(rs.getInt("reiziger_id"), rs.getString("voorletters"), rs.getString("tussenvoegsel"), rs.getString("achternaam"), rs.getDate("geboortedatum"));
+        reiziger.setAdres(adao.findByReiziger(reiziger));
+        return reiziger;
+    }
+
+    public void setAdao(AdresDAOPsql adao) {
+        this.adao = adao;
     }
 }

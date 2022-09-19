@@ -8,6 +8,7 @@ public class Reiziger {
     String tussenvoegsel;
     String achternaam;
     Date geboortedatum;
+    Adres adres;
 
     public Reiziger(int id, String voorletters, String achternaam)
     {
@@ -21,6 +22,12 @@ public class Reiziger {
         this(id, voorletters, achternaam);
         this.tussenvoegsel = tussenvoegsel;
         this.geboortedatum = geboortedatum;
+    }
+
+    public Reiziger (int id, String voorletters, String tussenvoegsel, String achternaam, Date geboortedatum, Adres adres)
+    {
+        this(id, voorletters, achternaam, tussenvoegsel, geboortedatum);
+        this.adres = adres;
     }
 
     public int getReiziger_id() {
@@ -43,8 +50,12 @@ public class Reiziger {
         return geboortedatum;
     }
 
+    public void setAdres(Adres adres) {
+        this.adres = adres;
+    }
+
     public String toString()
     {
-        return "ID: "+this.reiziger_id+" | "+ this.voorletters + " " +this.tussenvoegsel+ " " + this.achternaam + " | " + this.geboortedatum;
+        return "Reiziger {"+reiziger_id+" "+voorletters+". "+tussenvoegsel+" "+achternaam+", geb. "+geboortedatum+", "+adres+"}";
     }
 }
