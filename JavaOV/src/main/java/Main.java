@@ -14,6 +14,7 @@ public class Main {
     public static void main(String[] args) {
 
         try {
+//            Ik heb hier het connectiegebeuren aangepast op wat er in de les voorbij is gekomen.
             ReizigerDAOPsql rdao = new ReizigerDAOPsql(getConnection());
             AdresDAOPsql adao = new AdresDAOPsql(getConnection());
             rdao.setAdao(adao);

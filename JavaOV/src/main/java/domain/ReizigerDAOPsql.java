@@ -45,6 +45,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             st.setDate(4, reiziger.getGeboortedatum());
             st.setInt(5, reiziger.getReiziger_id());
             st.executeUpdate();
+            st.close();
             return  true;
         } catch (Exception e)
         {
@@ -60,6 +61,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             PreparedStatement st = conn.prepareStatement("DELETE FROM reiziger WHERE reiziger_id = ?;");
             st.setInt(1, reiziger.getReiziger_id());
             st.executeUpdate();
+            st.close();
             return  true;
         } catch (Exception e)
         {
@@ -75,6 +77,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             PreparedStatement st = conn.prepareStatement("SELECT * FROM reiziger WHERE reiziger_id = ?;");
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
+            st.close();
             rs.next();
             return constructReiziger(rs);
         } catch (Exception e)
@@ -120,11 +123,13 @@ public class ReizigerDAOPsql implements ReizigerDAO {
         {
            returnList.add(constructReiziger(rs));
         }
+        st.close();
         return returnList;
     }
 
     private Reiziger constructReiziger (ResultSet rs) throws SQLException {
 //        this.adao = new AdresDAOPsql(conn);
+//        Dit gebruiken we alleen bij het ophalen van een reiziger uit de database.
         Reiziger reiziger = new Reiziger(rs.getInt("reiziger_id"), rs.getString("voorletters"), rs.getString("tussenvoegsel"), rs.getString("achternaam"), rs.getDate("geboortedatum"));
         reiziger.setAdres(adao.findByReiziger(reiziger));
         return reiziger;

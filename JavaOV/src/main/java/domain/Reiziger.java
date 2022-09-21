@@ -1,6 +1,7 @@
 package domain;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Reiziger {
     int reiziger_id;
@@ -9,6 +10,7 @@ public class Reiziger {
     String achternaam;
     Date geboortedatum;
     Adres adres;
+    List<OVChipkaart> ovChipkaarten;
 
     public Reiziger(int id, String voorletters, String achternaam)
     {
@@ -52,6 +54,14 @@ public class Reiziger {
 
     public void setAdres(Adres adres) {
         this.adres = adres;
+    }
+
+    public List<OVChipkaart> getOvChipkaarten() {
+        return ovChipkaarten;
+    }
+
+    public void addOVChipkaart(OVChipkaart ovChipkaart) {
+        this.ovChipkaarten.add(ovChipkaart);
     }
 
     public String toString()
