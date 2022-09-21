@@ -13,12 +13,22 @@ public class AdresDAOPsql implements AdresDAO {
     Connection conn;
     ReizigerDAOPsql rdao;
 
-    public AdresDAOPsql(Connection conn)
-    {
+    /**
+     * Takes the given connection and saves it.
+     *
+     * @param conn the connection the DAO uses.
+     */
+    public AdresDAOPsql(Connection conn) {
         this.conn = conn;
 //        this.rdao = new ReizigerDAOPsql(conn);
     }
 
+    /**
+     * Saves a new adres to the database
+     *
+     * @param adres
+     * @return {@code true} or {@code false}, if the operation was successful or not.
+     */
     @Override
     public boolean save(Adres adres) {
         try {
@@ -31,14 +41,19 @@ public class AdresDAOPsql implements AdresDAO {
             st.setInt(6, adres.getReizigerID());
             st.executeUpdate();
             return true;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
 
+    /**
+     * Updates an adress that's already in the database.
+     *
+     * @param adres
+     * @return {@code true} or {@code false}, if the operation was successful or not.
+     */
     @Override
     public boolean update(Adres adres) {
         try {
@@ -50,29 +65,39 @@ public class AdresDAOPsql implements AdresDAO {
             st.setInt(5, adres.getReizigerID());
             st.setInt(6, adres.getID());
             st.executeUpdate();
-            return  true;
-        } catch (Exception e)
-        {
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
             return false;
         }
     }
 
+    /**
+     * Deletes the given adres
+     *
+     * @param adres the address to be deleted
+     * @return {@code true} or {@code false}, if the operation was successful or not.
+     */
     @Override
     public boolean delete(Adres adres) {
         try {
             PreparedStatement st = conn.prepareStatement("DELETE FROM adres WHERE adres_id = ?;");
             st.setInt(1, adres.getID());
             st.executeUpdate();
-            return  true;
-        } catch (Exception e)
-        {
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
             return false;
         }
     }
+
+    /**
+     * Returns a list of all adresses in the database
+     *
+     * @return
+     */
 
     @Override
     public List<Adres> findAll() {
@@ -81,37 +106,47 @@ public class AdresDAOPsql implements AdresDAO {
             ResultSet rs = st.executeQuery();
             ArrayList<Adres> returnList = new ArrayList<>();
             rs.next();
-            while (rs.next())
-            {
+            while (rs.next()) {
                 returnList.add(constructAdres(rs));
             }
             return returnList;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
             return null;
         }
     }
 
+    /**
+     * Returns Adres object connected to the given Reiziger.
+     *
+     * @param reiziger Reiziger whose Adres we're trying to find.
+     * @return Adres
+     */
     @Override
     public Adres findByReiziger(Reiziger reiziger) {
         try {
             PreparedStatement st = conn.prepareStatement("SELECT * FROM adres WHERE reiziger_id = ?;");
             st.setInt(1, reiziger.getReiziger_id());
             ResultSet rs = st.executeQuery();
-            rs.next();
-            return constructAdres(rs);
-        }
-        catch (Exception e)
-        {
+            if (rs.next()) {
+                return constructAdres(rs);
+            }
+            return null;
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
             return null;
         }
     }
 
+    /**
+     * Constructs an Adres object from the given Database Data
+     *
+     * @param rs
+     * @return Adres
+     * @throws SQLException
+     */
     private Adres constructAdres(ResultSet rs) throws SQLException {
         return new Adres(rs.getInt("adres_id"), rs.getString("postcode"), rs.getString("huisnummer"), rs.getString("straat"), rs.getString("woonplaats"), rs.getInt("reiziger_id"));
     }

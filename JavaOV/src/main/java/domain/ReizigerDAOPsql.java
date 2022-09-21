@@ -127,6 +127,12 @@ public class ReizigerDAOPsql implements ReizigerDAO {
         return returnList;
     }
 
+    /**
+     * Creates a new Reiziger object from the given database Data
+     * @param rs
+     * @return Reiziger
+     * @throws SQLException
+     */
     private Reiziger constructReiziger (ResultSet rs) throws SQLException {
 //        this.adao = new AdresDAOPsql(conn);
 //        Dit gebruiken we alleen bij het ophalen van een reiziger uit de database.

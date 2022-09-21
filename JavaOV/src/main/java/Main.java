@@ -5,7 +5,9 @@ import domain.ReizigerDAOPsql;
 import interfaces.AdresDAO;
 import interfaces.ReizigerDAO;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Main {

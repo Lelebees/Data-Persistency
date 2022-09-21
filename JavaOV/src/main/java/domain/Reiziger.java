@@ -12,22 +12,19 @@ public class Reiziger {
     Adres adres;
     List<OVChipkaart> ovChipkaarten;
 
-    public Reiziger(int id, String voorletters, String achternaam)
-    {
+    public Reiziger(int id, String voorletters, String achternaam) {
         this.reiziger_id = id;
         this.voorletters = voorletters;
         this.achternaam = achternaam;
     }
 
-    public Reiziger(int id, String voorletters, String tussenvoegsel, String achternaam, Date geboortedatum)
-    {
+    public Reiziger(int id, String voorletters, String tussenvoegsel, String achternaam, Date geboortedatum) {
         this(id, voorletters, achternaam);
         this.tussenvoegsel = tussenvoegsel;
         this.geboortedatum = geboortedatum;
     }
 
-    public Reiziger (int id, String voorletters, String tussenvoegsel, String achternaam, Date geboortedatum, Adres adres)
-    {
+    public Reiziger(int id, String voorletters, String tussenvoegsel, String achternaam, Date geboortedatum, Adres adres) {
         this(id, voorletters, achternaam, tussenvoegsel, geboortedatum);
         this.adres = adres;
     }
@@ -64,8 +61,7 @@ public class Reiziger {
         this.ovChipkaarten.add(ovChipkaart);
     }
 
-    public String toString()
-    {
-        return "Reiziger {"+reiziger_id+" "+voorletters+". "+tussenvoegsel+" "+achternaam+", geb. "+geboortedatum+", "+adres+"}";
+    public String toString() {
+        return "Reiziger {" + reiziger_id + " " + voorletters + ". " + tussenvoegsel + " " + achternaam + ", geb. " + geboortedatum + ", " + adres + "}";
     }
 }
